@@ -1,0 +1,24 @@
+import base64
+import hashlib
+import math
+from pathlib import Path
+
+user_input = input("Please input desired filepath:").strip()
+
+file_path = Path(user_input)
+
+if file_path.exists() and file_path.is_file():
+    try:
+        with open(file_path, "rb") as f:
+            digest = hashlib.file_digest(f, "sha256")
+
+        print(f"\nSuccess!")
+        print(f"File: {file_path.name}")
+        print(f"SHA-256: {digest.hexdigest()}")
+
+    except Exception as e:
+        print("Unexpected error while reading file: {e}")
+
+else:
+    print(f"\nError: could not locate file: '{user_input}'.")
+    print("Please ensure filepath is correct")
